@@ -1,6 +1,6 @@
 <?php
 
-require_once "./Conexion.php";
+require_once "Conexion.php";
 
 //MODELO = CONTIENE LA LOGICA
 // extends : HERENCIA (POO) en PHP
@@ -12,7 +12,7 @@ class Curso extends Conexion{
 
   //Constructor, INICIALIZAR            
   // Valor de retorno de la funccion sera asignada a accesoBD 
-  public fuction __CONSTRUCT(){
+  public function __CONSTRUCT(){
     $this->accesoBD = parent::getConexion(); 
   }
 
@@ -24,7 +24,7 @@ class Curso extends Conexion{
       //2. Ejecutamos la consulta
       $consulta->execute();
       //3. Devolvemos el resultado (array asociativo)
-      return $consulta->fecthAll(PDO::FETCH_ASSOC);
+      return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(Excepction $e){
       die($e->getMessage());
