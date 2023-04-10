@@ -63,6 +63,18 @@ class Curso extends Conexion{
     }
   }
 
+  public function getCurso($idcurso = 0){
+    try{
+      $consulta = $this->accesoBD->prepare("CALL spu_cursos_recuperar_id(?)");
+      $consulta->execute(array($idcurso));
+      //Retornar el registro encontrado
+      return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+      die($e->getMessage);
+    }
+  }
+
   public function actualizarCurso(){
     try{
 
@@ -71,6 +83,8 @@ class Curso extends Conexion{
       die($e->getMessage());
     }
   }
+
+  
 
 
 }
