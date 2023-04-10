@@ -202,6 +202,36 @@
         }
       });
 
+
+      //Detectar click Editar (asincrono)
+      //on() permite gestionar-controlar eventos
+      $("#tabla-cursos tbody").on("click", ".editar", function(){
+        const idcursoEditar = $(this).data("idcurso")
+          $.ajax({
+            url: '../controllers/curso.controller.php',
+            type: 'POST',
+            data: {
+              operacion : 'obtenercurso',
+              idcurso : idcursoEditar
+            },
+            dataType: 'JSON',
+            success: function(result){
+              console.log(result);
+
+             //Retornamos los valores a los controles de from
+            $("#nombrecurso").val(result["nombrecurso"]);
+            $("#especialidad").val(result["especialidad"]);
+            $("#complejidad").val(result["complejidad"]);
+            $("#fechainicio").val(result["fechainicio"]);
+            $("#precio").val(result["precio"]);
+
+            //Ponemos al modal en pantalla
+            $("#modal-registro-cursos").modal("show");
+            }
+
+          });
+      });
+
       //Ejecucion automatica
       mostrarCursos();
     })
