@@ -75,18 +75,34 @@ class Curso extends Conexion{
     }
   }
 
-  public function actualizarCurso(){
+  public function actualizarCurso($datos = []){
     try{
-
-    }
+      //1. Preparamos consulta
+      $consulta = $this->accesoBD->prepare("CALL spu_cursos_actualizar(?,?,?,?,?,?)");
+      //2. Ejecutamos consulta
+      $consulta->execute(
+       array(
+         $datos["idcurso"],
+         $datos["nombrecurso"],
+         $datos["especialidad"],
+         $datos["complejidad"],
+         $datos["fechainicio"],
+         $datos["precio"]
+         
+       )
+     );
+   }
     catch(Excepction $e){
       die($e->getMessage());
     }
   }
+  
+}
+
 
   
 
 
-}
+
 
 ?>
