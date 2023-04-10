@@ -85,4 +85,51 @@ BEGIN
      SELECT * FROM cursos WHERE idcurso = _idcurso;
 END $$
 
-CALL spu_cursos_recuperar_id(2)
+CALL spu_cursos_recuperar_id(1);
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_cursos_actualizar
+(
+	IN _idcurso			INT,
+	IN _nombrecurso 	VARCHAR(50),
+	IN _especialidad	VARCHAR(70),
+	IN _complejidad	CHAR(1),
+	IN _fechainicio	DATE,
+	IN _precio		DECIMAL(7,2)
+)
+BEGIN
+	UPDATE cursos SET
+		nombrecurso = _nombrecurso,
+		especialidad = _especialidad,
+		complejidad = _complejidad,
+		fechainicio = _fechainicio,
+		precio = _precio,
+		fechaupdate = NOW()
+	WHERE idcurso = _idcurso;
+
+END $$
+
+
+SELECT * FROM cursos WHERE idcurso = 3;
+CALL spu_cursos_actualizar(3, 'Excel para Gestion', 'ETI', 'A', '2023-06-21', 320);
+
+CREATE TABLE usuarios
+(
+	idusuario 		INT AUTO_INCREMENT PRIMARY KEY,
+	nombreusuario 	VARCHAR(30)		NOT NULL,
+	claveacceso		VARCHAR(90)		NOT NULL,
+	apellidos		VARCHAR(30)		NOT NULL,
+	nombres			VARCHAR(30)		NOT NULL,
+	nivelacceso		CHAR(1)			NOT NULL DEFAULT 'A',
+	estado 			CHAR(1)			NOT NULL DEFAULT '1',
+	fecharegistro	DATETIME 		NOT NULL DEFAULT NOW(),
+	fechaupdate 	DATETIME 		NULL,
+	CONSTRAINT uk_nombreusuario_usa	UNIQUE (nombreusuario)
+	)ENGINE = INNODB;
+	
+	INSERT INTO usuarios (nombreusuario, claveacceso, apellidos, nombres) VALUES
+		('ANA', '123456', 'Sotelo Cardenas', 'Ana Cecilia'),
+		('Luis', '123456', 'diaz Magallames', 'Luis Otniel');
+		
+	SELECT * FROM usuarios;	
